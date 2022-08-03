@@ -12,11 +12,7 @@ public class MySQLConnections {
     private static MySQLConnections connection = null;
     private MySQLConnections() throws Exception {
         //设置参数
-//        driver = "com.mysql.jdbc.Driver";//每个都一样
-//        dbURL = "jdbc:mysql://rm-f8z1i1s40fh840cl83o.mysql.rds.aliyuncs.com:3306/library";//这里是数据库地址一般是 【数据库地址:3306/数据库名】
-//        user = "admin_library";//你的数据库账号
-//        password = "Aa123456";//你的数据库密码
-        System.out.println("dbURL:" + dbURL);//打印地址，手机上看不见，用于调试
+        driver = "com.mysql.jdbc.Driver";//每个都一样
     }
     public static Connection getConnection() {
         Connection conn = null;

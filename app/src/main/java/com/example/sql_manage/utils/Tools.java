@@ -98,7 +98,7 @@ public class Tools {
                 if(Stream != null){
                     Stream.close();
                 }
-            } catch (IOException e) {
+            } catch (IOException e) { 
                 e.printStackTrace();
             }
 
@@ -106,4 +106,14 @@ public class Tools {
         return  null;
     }
 
+
+    // 判断字符串是否只有数字
+    public static boolean isNumeric(String str){
+        for(int i=str.length();--i>=0;){
+            if (!Character.isDigit(str.charAt(i))){
+                return false;
+            }
+        }
+        return true;
+    }
 }
