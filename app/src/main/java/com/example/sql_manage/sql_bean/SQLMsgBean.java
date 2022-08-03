@@ -33,7 +33,7 @@ public class SQLMsgBean {
     }
 
     public String getmainURL() {
-        return "jdbc:mysql://"+dburl+":"+dbport+"/"+dbname;
+        return "jdbc:mysql://"+dburl+":"+dbport;
     }
     public String getStauts() {
         return stauts;

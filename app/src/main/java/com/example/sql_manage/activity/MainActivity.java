@@ -1,4 +1,4 @@
-package com.example.sql_manage;
+package com.example.sql_manage.activity;
 
 import static com.example.sql_manage.utils.Tools.isNumeric;
 
@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,8 +20,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.sql_manage.MainData;
+import com.example.sql_manage.R;
 import com.example.sql_manage.adapter.InformationAdapter;
 import com.example.sql_manage.sql_bean.SQLMsgBean;
+import com.example.sql_manage.utils.MySQLConnections;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -33,6 +35,10 @@ import com.google.gson.reflect.TypeToken;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.lang.reflect.Type;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -44,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView sql_list;
     private InformationAdapter adapter;
     private List<SQLMsgBean> InformationList = new ArrayList<>();
+
+
+    private static Connection con = null;
+    private static PreparedStatement stmt = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +69,33 @@ public class MainActivity extends AppCompatActivity {
         swip_fresh_init();
 
 
-
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // TODO: 2022/8/3 设计新功能
+//                        con = MySQLConnections.getConnection(sqlMsgBean.getmainURL(),sqlMsgBean.getUser(),sqlMsgBean.getPassword());
+                    }
+                });
+            }
+        });
 
 
     }
+    public static List<String> getDataBases(Connection connection) throws Exception {
 
+        DatabaseMetaData metaData = connection.getMetaData();
+        ResultSet catalogs = metaData.getCatalogs();
+        ArrayList<String> dbs = new ArrayList<>();
+        while (catalogs.next()) {
+            String db = catalogs.getString(".TABLE_CAT");
+            dbs.add(db);
+        }
+
+        return dbs;
+    }
     // 绑定右上角的menu菜单
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -214,7 +246,8 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new InformationAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                Intent intent = new Intent(MainActivity.this,ManageActivity.class);
+                MainData.sqlMsgBean = msgBeans.get(position);
+                Intent intent = new Intent(MainActivity.this, ManageActivity.class);
                 startActivity(intent);
             }
         });

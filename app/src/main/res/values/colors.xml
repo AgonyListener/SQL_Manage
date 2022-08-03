@@ -10,4 +10,6 @@
 
     <color name="hui">#f1f3fc</color>
     <color name="orange">#f45728</color>
+    <color name="red">#F44336</color>
+    <color name="green">#4CAF50</color>
 </resources>

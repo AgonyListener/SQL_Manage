@@ -5,21 +5,26 @@ import java.sql.DriverManager;
 
 public class MySQLConnections {
     //全局参数
-    private String driver = "";
+    private static String driver;
     private String dbURL = "";
     private String user = "";
     private String password = "";
     private static MySQLConnections connection = null;
-    private MySQLConnections() throws Exception {
+    private MySQLConnections(String dbURL, String user, String password) throws Exception {
         //设置参数
         driver = "com.mysql.jdbc.Driver";//每个都一样
+        this.dbURL = dbURL;
+        this.user = user;
+        this.password = password;
     }
-    public static Connection getConnection() {
+
+
+    public static Connection getConnection(String dbURL, String user, String password) {
         Connection conn = null;
         if (connection == null) {
             try {
                 //开始连接
-                connection = new MySQLConnections();
+                connection = new MySQLConnections(dbURL,user,password);
 
             } catch (Exception e) {
                 e.printStackTrace();
