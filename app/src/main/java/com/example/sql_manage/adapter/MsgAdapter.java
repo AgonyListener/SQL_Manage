@@ -86,13 +86,11 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
         for (int j = 0; j < listAdapter.getCount(); j++) {
             View listItem = listAdapter.getView(j, null, holder.projectlist);
             listItem.measure(0, 0);
-            totalHeight += 65;
+            totalHeight += listItem.getMeasuredHeight();
         }
         ViewGroup.LayoutParams params = holder.projectlist.getLayoutParams();
-        params.height = totalHeight + (holder.projectlist.getDividerHeight() * (listAdapter.getCount() -1));
-        ((ViewGroup.MarginLayoutParams)params).setMargins(10, 10, 10, 10);
+        params.height = totalHeight + (holder.projectlist.getDividerHeight() * (listAdapter.getCount() - 1));
         holder.projectlist.setLayoutParams(params);
-        myBaseAdapter.notifyDataSetChanged();
         // 动态控制列表的长度 end
 
         holder.itemView.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {

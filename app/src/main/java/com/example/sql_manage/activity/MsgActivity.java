@@ -236,7 +236,13 @@ public class MsgActivity extends AppCompatActivity {
                 }
             }catch (Exception e){
                 e.printStackTrace();
-                Toast.makeText(MsgActivity.this, "连接异常，尝试重启APP", Toast.LENGTH_SHORT).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MsgActivity.this, "连接异常，尝试重启APP", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         }
     }
