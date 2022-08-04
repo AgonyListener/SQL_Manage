@@ -1,6 +1,7 @@
 package com.example.sql_manage;
 
 import com.example.sql_manage.sql_bean.SQLMsgBean;
+import com.example.sql_manage.sql_bean.TableBean;
 
 /**
  * @ClassName MainData
@@ -10,6 +11,9 @@ import com.example.sql_manage.sql_bean.SQLMsgBean;
  * @Version 1.0
  */
 public class MainData {
+    // 当前状态的数据库
     public static SQLMsgBean sqlMsgBean;
+    // 当前状态的数据表
+    public static TableBean tableBean;
 
 }

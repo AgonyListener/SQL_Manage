@@ -10,6 +10,12 @@ import android.util.DisplayMetrics;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tools {
     /*
@@ -115,5 +121,43 @@ public class Tools {
             }
         }
         return true;
+    }
+
+    /**
+     * 获取当前数据库的所有表
+     * @param connection 数据库连接对象
+     * @param dataBase 数据库名称
+     * @return 当前数据库的所有表
+     * @throws SQLException
+     */
+    public static List<String> getTables(Connection connection, String dataBase) throws SQLException {
+        DatabaseMetaData metaData = connection.getMetaData();
+        //最后一个参数TABLE 表示用户表 见 DatabaseMetaData.getTableTypes()方法
+        ResultSet resultSet = metaData.getTables(dataBase, null, null, new String[]{"TABLE"});
+        ArrayList<String> tables = new ArrayList<>();
+        while (resultSet.next()) {
+            String table = resultSet.getString("TABLE_NAME");
+            tables.add(table);
+        }
+        return tables;
+    }
+
+    /**
+     *
+     * @param connection 数据库连接对象
+     * @return 当前连接的所有数据库
+     * @throws Exception
+     */
+    public static List<String> getDataBases(Connection connection) throws Exception {
+
+        DatabaseMetaData metaData = connection.getMetaData();
+        ResultSet catalogs = metaData.getCatalogs();
+        ArrayList<String> dbs = new ArrayList<>();
+        while (catalogs.next()) {
+            String db = catalogs.getString(".TABLE_CAT");
+            dbs.add(db);
+        }
+
+        return dbs;
     }
 }

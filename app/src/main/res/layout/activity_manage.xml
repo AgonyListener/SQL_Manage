@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/hui"
     tools:context=".activity.ManageActivity">
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/material"
@@ -21,8 +22,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="18dp"
+            android:background="@color/purple_200"
             android:textColor="@color/white"
-            android:text="无表或者连接异常【点击可编辑信息】" />
+            android:text="没有联网更新【下拉可更新】" />
     </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
@@ -67,13 +69,19 @@
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 
-
-
-    <TextView
-        android:id="@+id/textView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swip_fresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sql_list"
+            android:background="@color/hui"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 </LinearLayout>
