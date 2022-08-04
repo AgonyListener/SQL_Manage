@@ -43,7 +43,7 @@
                     android:id="@+id/editText1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="rm-f8z1i1s40fh840cl83o.mysql.rds.aliyuncs.com:3306"
+                    android:text=""
                     android:hint="请输入内容"
                     android:singleLine="false" />
             </com.google.android.material.textfield.TextInputLayout>

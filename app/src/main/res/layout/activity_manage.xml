@@ -40,6 +40,7 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp">
             <TextView
+                android:id="@+id/btn_lock"
                 android:padding="10dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -58,6 +59,7 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp">
             <TextView
+                android:id="@+id/btn_add"
                 android:padding="10dp"
                 android:gravity="center"
                 android:layout_width="match_parent"

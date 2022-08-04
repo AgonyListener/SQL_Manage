@@ -6,16 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sql_manage.R;
+import com.example.sql_manage.sql_bean.DataBean;
 import com.example.sql_manage.sql_bean.MsgBean;
 import com.example.sql_manage.sql_bean.TableBean;
 import com.example.sql_manage.utils.ScaleInAnimation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,18 +37,15 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
     private Context context;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView row_name;
-        TextView row_value;
-        TextView row_type;
+        ListView projectlist;
         TextView row_num;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            row_name = itemView.findViewById(R.id.row_name);
-            row_value = itemView.findViewById(R.id.row_value);
-            row_type = itemView.findViewById(R.id.row_type);
             row_num = itemView.findViewById(R.id.numbers);
+            projectlist = itemView.findViewById(R.id.projectlist);
         }
     }
+
     public MsgAdapter(List<List<MsgBean>> mInformationList){
         this.mInformationList = mInformationList;
     }
@@ -62,19 +63,37 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull MsgAdapter.ViewHolder holder, int position) {
         int i = position;
         List<MsgBean> msgBeans = mInformationList.get(position);
-        // 获取当前时间
-//        new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        List<DataBean> dataBeans = new ArrayList<DataBean>();
+
         if (msgBeans.size()!=0){
             holder.row_num.setText(""+(i+1));
-            holder.row_name.setText(msgBeans.get(0).getName());
-            holder.row_value.setText(""+msgBeans.get(0).getValue());
-            holder.row_type.setText(msgBeans.get(0).getType());
-            for (int j = 1; j < msgBeans.size(); j++) {
-                holder.row_name.append("\n"+msgBeans.get(j).getName());
-                holder.row_value.append("\n"+msgBeans.get(j).getValue());
-                holder.row_type.append("\n"+msgBeans.get(j).getType());
+
+            for (int j = 0; j < msgBeans.size(); j++) {
+                DataBean dataBean = new DataBean(msgBeans.get(j).getName(),msgBeans.get(j).getValue(),msgBeans.get(j).getType());
+                dataBeans.add(dataBean);
             }
         }
+
+        MyBaseAdapter myBaseAdapter = new MyBaseAdapter(holder.itemView.getContext(),dataBeans);
+        holder.projectlist.setAdapter(myBaseAdapter);
+
+        // 动态控制列表的长度 start
+        ListAdapter listAdapter = holder.projectlist.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+        int totalHeight = 0;
+        for (int j = 0; j < listAdapter.getCount(); j++) {
+            View listItem = listAdapter.getView(j, null, holder.projectlist);
+            listItem.measure(0, 0);
+            totalHeight += 65;
+        }
+        ViewGroup.LayoutParams params = holder.projectlist.getLayoutParams();
+        params.height = totalHeight + (holder.projectlist.getDividerHeight() * (listAdapter.getCount() -1));
+        ((ViewGroup.MarginLayoutParams)params).setMargins(10, 10, 10, 10);
+        holder.projectlist.setLayoutParams(params);
+        myBaseAdapter.notifyDataSetChanged();
+        // 动态控制列表的长度 end
 
         holder.itemView.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override

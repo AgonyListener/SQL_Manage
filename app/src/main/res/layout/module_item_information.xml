@@ -65,7 +65,7 @@
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:layout_weight="1"
-                            android:background="#FF7042"
+                            android:background="#008EFF"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp"
                             android:text="状态"

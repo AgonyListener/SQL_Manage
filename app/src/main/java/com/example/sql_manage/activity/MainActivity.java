@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    private List<SQLMsgBean> msgBeans = new ArrayList<>();
+    private static List<SQLMsgBean> msgBeans = new ArrayList<>();
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView sql_list;
@@ -69,32 +69,23 @@ public class MainActivity extends AppCompatActivity {
         swip_fresh_init();
 
 
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // TODO: 2022/8/3 设计新功能
-//                        con = MySQLConnections.getConnection(sqlMsgBean.getmainURL(),sqlMsgBean.getUser(),sqlMsgBean.getPassword());
-                    }
-                });
-            }
-        });
+//        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // TODO: 2022/8/3 设计新功能
+////                        con = MySQLConnections.getConnection(sqlMsgBean.getmainURL(),sqlMsgBean.getUser(),sqlMsgBean.getPassword());
+//                    }
+//                });
+//            }
+//        });
 
 
     }
-    public static List<String> getDataBases(Connection connection) throws Exception {
-
-        DatabaseMetaData metaData = connection.getMetaData();
-        ResultSet catalogs = metaData.getCatalogs();
-        ArrayList<String> dbs = new ArrayList<>();
-        while (catalogs.next()) {
-            String db = catalogs.getString(".TABLE_CAT");
-            dbs.add(db);
-        }
-
-        return dbs;
+    public static void ChangeStauts(String stauts){
+        msgBeans.get(MainData.k).setStauts(stauts);
     }
     // 绑定右上角的menu菜单
     @Override
@@ -106,10 +97,7 @@ public class MainActivity extends AppCompatActivity {
     // 当点击添加按钮
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         ShowAddDialog();
-
-
         return false;
     }
 
@@ -247,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(int position) {
                 MainData.sqlMsgBean = msgBeans.get(position);
+                MainData.k = position;
                 Intent intent = new Intent(MainActivity.this, ManageActivity.class);
                 startActivity(intent);
             }
@@ -301,6 +290,13 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         }).start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+        data_save();
     }
 
     /**

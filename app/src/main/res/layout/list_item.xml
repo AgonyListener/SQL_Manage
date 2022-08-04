@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/row_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:text="列名"
+                    android:textSize="14dp" />
+                <TextView
+                    android:id="@+id/row_type"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:gravity="center"
+                    android:ellipsize="end"
+                    android:text="数据类型"
+                    android:textSize="14dp" />
+                <TextView
+                    android:id="@+id/row_value"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:text="值"
+                    android:textColor="@color/black"
+                    android:textSize="14dp" />
+</LinearLayout>

@@ -65,6 +65,26 @@ public class ManageActivity extends AppCompatActivity {
         //恢复列表数据
         data_resume();
 
+        if (msgBeans.size()!=0) {
+            MainActivity.ChangeStauts("正常");
+        }else {
+            MainActivity.ChangeStauts("异常");
+        }
+
+        findViewById(R.id.btn_lock).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ManageActivity.this, "正在设计……此功能用于防止其他人使用你手机对你数据库进行误操作而设计", Toast.LENGTH_SHORT).show();
+            }
+        });
+        findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ManageActivity.this, "敬请期待……", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
     private void initViews(){
 
@@ -207,7 +227,7 @@ public class ManageActivity extends AppCompatActivity {
      * @date 2022/7/26 14:59
      */
     private void data_resume(){
-        SharedPreferences sp =getSharedPreferences("list1",MODE_PRIVATE);
+        SharedPreferences sp =getSharedPreferences(sqlMsgBean.getTitle()+sqlMsgBean.getDbname(),MODE_PRIVATE);
         if (sp.getString("lists","").isEmpty()){
             // 如果数据为空，就联网读取
             new Thread_updata().start();
@@ -226,7 +246,7 @@ public class ManageActivity extends AppCompatActivity {
      * @date 2022/7/26 14:59
      */
     private void data_save(){
-        SharedPreferences sp =getSharedPreferences("list1",MODE_PRIVATE);
+        SharedPreferences sp =getSharedPreferences(sqlMsgBean.getTitle()+sqlMsgBean.getDbname(),MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.clear();
         Gson gson = new Gson();

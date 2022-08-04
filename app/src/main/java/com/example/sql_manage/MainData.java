@@ -13,6 +13,8 @@ import com.example.sql_manage.sql_bean.TableBean;
 public class MainData {
     // 当前状态的数据库
     public static SQLMsgBean sqlMsgBean;
+    // 当前状态的数据库序号
+    public static int k;
     // 当前状态的数据表
     public static TableBean tableBean;
 

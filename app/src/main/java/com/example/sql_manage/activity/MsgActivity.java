@@ -7,6 +7,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,7 +53,8 @@ public class MsgActivity extends AppCompatActivity {
         //获取当前状态的数据表
         sqlMsgBean = MainData.sqlMsgBean;
         tableBean = MainData.tableBean;
-
+        //返回按钮
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //数据库名字
         Objects.requireNonNull(getSupportActionBar()).setTitle(tableBean.getName());
         //加载列表
@@ -64,6 +66,16 @@ public class MsgActivity extends AppCompatActivity {
         new Thread_updata().start();
 
     }
+    //设置返回键
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
+    }
+
     public void swip_fresh_init(){
         //下拉属性
         swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swip_fresh);
@@ -208,6 +220,10 @@ public class MsgActivity extends AppCompatActivity {
 
                         }
                         count++;
+                        if (count>=50){
+                            Toast.makeText(MsgActivity.this, "最多显示50条数据", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
                     }
                     runOnUiThread(new Runnable() {
                         @Override
@@ -220,6 +236,7 @@ public class MsgActivity extends AppCompatActivity {
                 }
             }catch (Exception e){
                 e.printStackTrace();
+                Toast.makeText(MsgActivity.this, "连接异常，尝试重启APP", Toast.LENGTH_SHORT).show();
             }
         }
     }

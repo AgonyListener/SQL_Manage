@@ -2,6 +2,7 @@ package com.example.sql_manage.adapter;
 
 import android.animation.Animator;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,13 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
         holder.information_stauts.setText(sqlMsgBean.getStauts());
         holder.information_db.setText(sqlMsgBean.getDbname());
         holder.information_url.setText(sqlMsgBean.getmainURL());
+        if (sqlMsgBean.getStauts().equals("正常")){
+            holder.information_stauts.setBackgroundColor(Color.parseColor("#4CAF50"));//设置颜色
+        }else if (sqlMsgBean.getStauts().equals("异常")){
+            holder.information_stauts.setBackgroundColor(Color.parseColor("#F44336"));//设置颜色
+        }
+
+
         holder.itemView.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
